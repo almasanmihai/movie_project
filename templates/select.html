@@ -12,7 +12,15 @@
 
 {% block content %}
 <div class="container">
+  {% if lenght == 0: %}
+    <h1 class="heading">Your search return no results.</h1>
+    <div class="container text-center add">
+    <a href="{{ url_for('add') }}" class="button">Search Again</a>
+</div>
+  {% else: %}
     <h1 class="heading">Select Movie</h1>
+  {% endif %}
+
 
   {% for i in range(lenght): %}
   <p>

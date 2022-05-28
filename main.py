@@ -5,9 +5,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+import os
 
-TMDB_API_KEY = 'fe1d1d5e4b509c3f8422d5ee1d5d51b0'
+TMDB_API_KEY = "fe1d1d5e4b509c3f8422d5ee1d5d51b0"
 TMDB_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZTFkMWQ1ZTRiNTA5YzNmODQyMmQ1ZWUxZDVkNTFiMCIsInN1YiI6IjYyOGY2ZDkxZGY4NmE4NTA4NWZjYjg3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tvD58Un1GDDu1wOPfPwGnvpClZ4mL5-5HHfJPgHreI4"
+
 
 header = {
     'Authorization': f'Bearer {TMDB_BEARER_TOKEN}',
@@ -87,9 +89,9 @@ def edit(id):
     return render_template("edit.html", movie=movie_to_update, form=form)
 
 
-@app.route("/delete/<dele>", methods=['GET', 'POST'])
-def delete(dele):
-    movie_id = dele
+@app.route("/delete")
+def delete():
+    movie_id = request.args.get("dele")
     movie_to_delete = Movie.query.get(movie_id)
     db.session.delete(movie_to_delete)
     db.session.commit()
@@ -122,7 +124,7 @@ def select():
                 db.session.commit()
             except Exception:
                 return redirect(url_for('home'))
-            return redirect(url_for('home'))
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':

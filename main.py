@@ -5,11 +5,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
-import os
+from secret import key, token
 
-TMDB_API_KEY = "fe1d1d5e4b509c3f8422d5ee1d5d51b0"
-TMDB_BEARER_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZTFkMWQ1ZTRiNTA5YzNmODQyMmQ1ZWUxZDVkNTFiMCIsInN1YiI6IjYyOGY2ZDkxZGY4NmE4NTA4NWZjYjg3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tvD58Un1GDDu1wOPfPwGnvpClZ4mL5-5HHfJPgHreI4"
-
+TMDB_API_KEY = key
+TMDB_BEARER_TOKEN = token
 
 header = {
     'Authorization': f'Bearer {TMDB_BEARER_TOKEN}',
@@ -36,7 +35,7 @@ class Movie(db.Model):
     img_url = db.Column(db.String(120), unique=False, nullable=True)
 
 
-db.create_all()
+# db.create_all()
 
 
 class RatingForm(FlaskForm):

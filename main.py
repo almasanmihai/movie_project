@@ -105,26 +105,23 @@ def select():
         description = request.args.get("description")
         rating = float(request.args.get("rating"))
         img_url = f"https://image.tmdb.org/t/p/w500{request.args.get('img_url')}"
-    except ValueError:
+    except (ValueError, TypeError):
         return redirect(url_for('home'))
     else:
         if year and title and description and rating and img_url:
-            try:
-                new_movie2 = Movie(
-                    title=title,
-                    year=year,
-                    description=description,
-                    rating=rating,
-                    ranking=7,
-                    review="None",
-                    img_url=img_url
-                )
-                db.session.add(new_movie2)
-                db.session.commit()
-            except Exception:
-                return redirect(url_for('home'))
-    return redirect(url_for('home'))
+            new_movie2 = Movie(
+                title=title,
+                year=year,
+                description=description,
+                rating=rating,
+                ranking=7,
+                review="None",
+                img_url=img_url
+            )
+            db.session.add(new_movie2)
+            db.session.commit()
+        return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')

@@ -19,6 +19,7 @@
     <p class="description">These are my all time favourite movies.</p>
 
     {% for movie in movies: %}
+    {% if movie.ranking <= 10: %}
     <div class="card">
         <div class="front" style="background-image: url('{{ movie.img_url }}');">
             <p class="large">{{ movie.ranking }}</p>
@@ -41,7 +42,7 @@
             </div>
         </div>
     </div>
-
+    {% endif %}
     {% endfor %}
 
 </div>

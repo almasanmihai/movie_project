@@ -108,7 +108,10 @@ def select():
     except (ValueError, TypeError):
         return redirect(url_for('home'))
     else:
-        if year and title and description and rating and img_url:
+        title_exist = Movie.query.filter(Movie.title == title).first()
+        if title_exist:
+            return redirect(url_for('home'))
+        elif year and title and description and rating and img_url:
             new_movie2 = Movie(
                 title=title,
                 year=year,
@@ -120,8 +123,20 @@ def select():
             )
             db.session.add(new_movie2)
             db.session.commit()
+        else:
+            new_movie2 = Movie(
+                title=title,
+                year=year,
+                description=description,
+                rating=rating,
+                ranking=7,
+                review="Picture not found",
+                img_url='/static/img/404.jpg'
+            )
+            db.session.add(new_movie2)
+            db.session.commit()
         return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
